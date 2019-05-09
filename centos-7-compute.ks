@@ -7,11 +7,11 @@ install
 eula --agreed
 
 # System authorization information
-auth --enableshadow --passalgo=sha512
+auth --enableshadow --passalgo=sha512 --enableldap --enableldapauth --enableldaptls --ldaploadcacert=$caurl --ldapserver=$ldapserver --ldapbasedn=$basedn --enablesssd --enablesssdauth
 
 firewall --disabled
 
-services --enabled=network,iptables,sshd
+services --enabled=network,sshd
 reboot
 
 # Run the Setup Agent on first boot
@@ -57,12 +57,12 @@ skipx
 # Disk partitioning information
 part /boot --fstype=ext4 --ondisk=sda --size=1024
 part pv.01 --fstype=lvmpv --ondisk=sda --size=1 --grow
-volgroup vg01 pv.01
-logvol / --fstype=xfs --name=root --vgname=vg01 --size=16384
-logvol /home --fstype=xfs --name=home --vgname=vg01 --size=8192
-logvol /var --fstype=xfs --name=var --vgname=vg01 --size=8192
-logvol /tmp --fstype=xfs --name=tmp --vgname=vg01 --size=8192
-logvol swap --fstype=swap --name=swap --vgname=vg01 --size=2048
+volgroup $name pv.01
+logvol / --fstype=xfs --name=root --vgname=$name --size=16384
+logvol /home --fstype=xfs --name=home --vgname=$name --size=8192
+logvol /var --fstype=xfs --name=var --vgname=$name --size=8192
+logvol /tmp --fstype=xfs --name=tmp --vgname=$name --size=8192
+logvol swap --fstype=swap --name=swap --vgname=$name --size=2048
 
 %packages --nobase --excludedocs
 @Infiniband Support
@@ -73,6 +73,9 @@ ipset
 yum-utils
 edac-utils
 libselinux-python
+authconfig
+nss-pam-ldapd
+sssd
 -setroubleshoot             # CIS 1.4.4
 -mcstrans                   # CIS 1.4.5
 -telnet                     # CIS 2.1.2
@@ -107,6 +110,7 @@ libselinux-python
 %post --log=/root/postinstall.log
 
 systemctl enable rdma
+systemctl enable sssd
 
 sed -i 's/inet_protocols = all/inet_protocols = ipv4/' /etc/postfix/main.cf
 
