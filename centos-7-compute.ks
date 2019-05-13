@@ -75,7 +75,7 @@ edac-utils
 libselinux-python
 authconfig
 nss-pam-ldapd
-sssd
+sssd-ldap
 -setroubleshoot             # CIS 1.4.4
 -mcstrans                   # CIS 1.4.5
 -telnet                     # CIS 2.1.2
