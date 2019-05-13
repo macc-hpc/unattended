@@ -74,7 +74,6 @@ yum-utils
 edac-utils
 libselinux-python
 authconfig
-nss-pam-ldapd
 sssd-ldap
 -setroubleshoot             # CIS 1.4.4
 -mcstrans                   # CIS 1.4.5
