@@ -7,7 +7,7 @@ install
 eula --agreed
 
 # System authorization information
-auth --enableshadow --passalgo=sha512 --enableldap --enableldapauth --enableldaptls --ldaploadcacert=$caurl --ldapserver=$ldapserver --ldapbasedn=$basedn --enablesssd --enablesssdauth
+auth --enableshadow --passalgo=sha512
 
 firewall --disabled
 
@@ -23,7 +23,7 @@ keyboard --vckeymap=pt-latin1 --xlayouts='pt'
 # System language
 lang en_US.UTF-8
 
-selinux --permissive
+selinux --disabled
 
 # Network information
 network --noipv6 --onboot=yes --bootproto=dhcp --hostname=$hostname
@@ -35,7 +35,7 @@ rootpw --iscrypted $default_password_crypted
 # sshpw --iscrypted --username=macc secret
 
 # System timezone
-timezone Europe/Lisbon --isUtc --ntpservers=pool.ntp.org
+timezone Europe/Lisbon --ntpservers=pool.ntp.org
 
 # System bootloader configuration
 bootloader --location=mbr --boot-drive=sda --append="biosdevname=0 net.ifnames=0 console=tty1 console=ttyS1,115200n8 spectre_v2=off nopti norhgb text"
@@ -75,6 +75,7 @@ edac-utils
 libselinux-python
 authconfig
 sssd-ldap
+libselinux-python
 -setroubleshoot             # CIS 1.4.4
 -mcstrans                   # CIS 1.4.5
 -telnet                     # CIS 2.1.2
@@ -141,13 +142,14 @@ chmod 600 /etc/cron.allow
 perl -npe 's/umask\s+0\d2/umask 077/g' -i /etc/bashrc
 perl -npe 's/umask\s+0\d2/umask 077/g' -i /etc/csh.cshrc
 
+echo "NOZEROCONF=yes" >> /etc/sysconfig/network
+
 mkdir /home/macc/.ssh
 touch /home/macc/.ssh/authorized_keys
 chmod 700 /home/macc/.ssh
 chmod 600 /home/macc/.ssh/authorized_keys
 chown -R macc: /home/macc/.ssh
 echo $sshpk >> /home/macc/.ssh/authorized_keys
-echo "NOZEROCONF=yes" >> /etc/sysconfig/network
 
 cat <<EOT > /etc/sysconfig/network-scripts/ifcfg-ib0
 NAME=ib0
