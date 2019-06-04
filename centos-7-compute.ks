@@ -49,7 +49,7 @@ url --url="http://mirror.fccn.pt/repos/pub/CentOS/7/os/x86_64/"
 repo --name=updates
 
 # create user
-user --name=macc --password=$default_password_crypted --iscrypted --groups=wheel
+user --name=macc --uid=1000000 --password=$default_password_crypted --iscrypted --groups=wheel
 
 # Don't install X
 skipx
