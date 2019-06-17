@@ -165,7 +165,5 @@ IPV4_FAILURE_FATAL=no
 TYPE=InfiniBand
 EOT
 
-echo 'options ib_ipoib send_queue_size=8192 recv_queue_size=8192' > /etc/modprobe.d/ib_ipoib.conf
-
 %end
 
