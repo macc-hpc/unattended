@@ -76,6 +76,7 @@ libselinux-python
 authconfig
 sssd-ldap
 libselinux-python
+bzip2
 -setroubleshoot             # CIS 1.4.4
 -mcstrans                   # CIS 1.4.5
 -telnet                     # CIS 2.1.2
