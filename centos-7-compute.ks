@@ -156,7 +156,7 @@ echo $sshpk >> /home/macc/.ssh/authorized_keys
 cat <<EOT > /etc/sysconfig/network-scripts/ifcfg-ib0
 NAME=ib0
 DEVICE=ib0
-CONNECTED_MODE=yes
+CONNECTED_MODE=no
 ONBOOT=yes
 IPV6INIT=no
 BOOTPROTO=static
