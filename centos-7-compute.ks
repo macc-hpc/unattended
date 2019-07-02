@@ -75,7 +75,6 @@ edac-utils
 libselinux-python
 authconfig
 sssd-ldap
-libselinux-python
 bzip2
 nano
 wget
